@@ -12,6 +12,7 @@ type Event struct{
 	Key string 
 	Payload []byte
 	Timestamp time.Time
+	Headers map[string]string
 
 	refCount int32
 	pool *sync.Pool
@@ -27,6 +28,9 @@ func (e *Event) Free() {
 		e.Topic = ""
 		e.Key = ""
 		e.pool.Put(e)
+		for k := range e.Headers {
+			delete(e.Headers, k)
+		}
 	}
 }
 
