@@ -7,7 +7,7 @@ option go_package = "github.com/ybgdul/go-broker/gen/v1;brokerv1";
 service EventBrokerService { 
     rpc PublishStream(stream PublishRequest) returns (stream PublishAck);
     rpc SubscribeStream(SubscribeRequest) returns (stream EventEnvelope);
-    rpc UpdateSubscription(UpdateSubscriptionRequest) returns (UpdateSubscriptionRequest);
+    rpc UpdateSubscription(UpdateSubscriptionRequest) returns (UpdateSubscriptionResponse);
 
 }
 
@@ -23,7 +23,7 @@ message PublishRequest {
     map<string, string> headers = 4;
 }
 
-message PublicAck { 
+message PublishAck { 
     uint64 event_id = 1;
     bool success = 2;
     string error_message = 3;
