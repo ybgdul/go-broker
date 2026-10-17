@@ -54,3 +54,16 @@ func (r *Router) hash(key string) uint32 {
 	h.Write([]byte(key))
 	return h.Sum32()
 }
+
+func (r *Router) RegisterSubscriber(sub *models.Subscriber) {
+	for _, p := range r.partitions{
+		p.RegisterSubscriber(sub)
+	}
+
+}
+
+func (r *Router) UnregisterSubscriber(id string) {
+	for _, p := range r.partitions{
+		p.DeleteSubscriber(id)
+	}
+}
